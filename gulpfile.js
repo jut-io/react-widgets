@@ -3,7 +3,6 @@ var gulp    = require('gulp')
   , del     = require('del')
   , merge   = require('merge-stream')
   , webpack = require('webpack')
-  , release = require('rf-release')
   , WebpackServer = require("webpack-dev-server")
   , concat = require('gulp-concat')
   , less = require('gulp-less')
@@ -12,7 +11,10 @@ var gulp    = require('gulp')
   , exec = require('child_process').exec
   , babelTransform = require('gulp-babel-helpers')
   , plumber = require('gulp-plumber')
-  , configs = require('./webpack.configs');
+  , configs = require('./webpack.configs')
+  , browserify = require('browserify')
+  , reactify = require('reactify')
+  , source = require('vinyl-source-stream');
 
 gulp.task('dist-clean', function(cb){
   del('./dist/*', cb);
@@ -131,7 +133,9 @@ gulp.task('less-test', function(){
 
 gulp.task('release', [ 'lib', 'dist-build']);
 
-gulp.task('publish', ['release'], release)
+gulp.task('publish', ['release'], function() {
+  return require('rf-release');
+});
 
 gulp.task('publish-docs', ['docs'], function(finish){
   run('git cm "rebuild docs"', function(){
@@ -148,4 +152,13 @@ gulp.task('publish-docs', ['docs'], function(finish){
       cb()
     })
   }
+})
+
+gulp.task('dist-build-browserify', function() {
+  browserify('./lib/index.js',
+    {
+      standalone: 'react-widgets'
+    }
+  ).exclude('react')
+   .transform(reactify).bundle().pipe(source('./react-widgets.js')).pipe(gulp.dest('./dist/'));
 })

@@ -62,6 +62,7 @@
   "devDependencies": {
     "babel": "^4.7.2",
     "babel-loader": "^4.0.0",
+    "browserify": "^10.2.1",
     "chance": "^0.7.1",
     "css-loader": "^0.7.1",
     "del": "^1.1.1",
@@ -101,10 +102,12 @@
     "react-bootstrap": "^0.13.0",
     "react-hot-loader": "^1.2.0",
     "react-router": "^0.13.2",
+    "reactify": "^1.1.1",
     "rf-release": "jquense/rf-release",
     "scriptjs": "^2.5.7",
     "style-loader": "^0.7.0",
     "url-loader": "^0.5.5",
+    "vinyl-source-stream": "^1.1.0",
     "webpack": "^1.7.0",
     "webpack-dev-server": "^1.7.0"
   }
