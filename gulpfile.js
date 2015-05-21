@@ -154,11 +154,11 @@ gulp.task('publish-docs', ['docs'], function(finish){
   }
 })
 
-gulp.task('dist-build-browserify', function() {
+gulp.task('dist-build-js-umd', function() {
   browserify('./lib/index.js',
     {
       standalone: 'react-widgets'
     }
   ).exclude('react')
-   .transform(reactify).bundle().pipe(source('./react-widgets.js')).pipe(gulp.dest('./dist/'));
+   .transform(reactify).bundle().pipe(source('./react-widgets-umd.js')).pipe(gulp.dest('./dist/'));
 })
